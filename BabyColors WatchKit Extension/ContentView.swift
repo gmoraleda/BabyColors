@@ -33,7 +33,6 @@ struct ContentView: View {
     @State var isEmojiVisible = true
     @ObservedObject var viewModel = ListViewModel()
 
-
     var body: some View {
         List {
             ForEach(viewModel.items) { item in
@@ -49,29 +48,6 @@ struct ContentView: View {
             }
         }
         .environment(\.defaultMinListRowHeight, cellHeight)
-        .focusable(true)
-        .digitalCrownRotation($crownRotation, from: 1, through: 5, by: 0.1, sensitivity: .low, isContinuous: true, isHapticFeedbackEnabled: true)
-        .onChange(of: crownRotation) { value in
-
-            var calculatedHeight: CGFloat = 0.0
-
-            print("Height \(calculatedHeight)")
-            print("Delta \(crownRotationDelta)")
-            print("Value \(value)")
-
-            
-            if value > crownRotationDelta {
-                calculatedHeight = cellHeight + 1
-                cellHeight = min(WKInterfaceDevice.current().screenBounds.height, calculatedHeight)
-
-            } else {
-                calculatedHeight = cellHeight - 1
-                cellHeight = max(WKInterfaceDevice.current().screenBounds.height / 2, calculatedHeight)
-            }
-            
-            crownRotationDelta = value
-
-        }
     }
 }
 
@@ -87,10 +63,11 @@ extension Color {
 
 extension String {
     static var randomEmoji: String {
-        let range = [UInt32](0x1F601 ... 0x1F64F)
-        let ascii = range[Int(drand48() * Double(range.count))]
-        let emoji = UnicodeScalar(ascii)?.description
-        return emoji!
+        let range = 0x1F300 ... 0x1F3F0
+        let index = Int(arc4random_uniform(UInt32(range.count)))
+        let ord = range.lowerBound + index
+        guard let scalar = UnicodeScalar(ord) else { return "❓" }
+        return String(scalar)
     }
 }
 
