@@ -26,9 +26,6 @@ class ListViewModel: ObservableObject {
 }
 
 struct ContentView: View {
-    @State var crownRotation = 0.0
-    @State var crownRotationDelta = 0.0
-    @State var rotationDelta = 0.0
     @State var cellHeight = WKInterfaceDevice.current().screenBounds.height / 2
     @State var isEmojiVisible = true
     @ObservedObject var viewModel = ListViewModel()
@@ -65,8 +62,8 @@ extension String {
     static var randomEmoji: String {
         let range = 0x1F300 ... 0x1F3F0
         let index = Int(arc4random_uniform(UInt32(range.count)))
-        let ord = range.lowerBound + index
-        guard let scalar = UnicodeScalar(ord) else { return "❓" }
+        let value = range.lowerBound + index
+        guard let scalar = UnicodeScalar(value) else { return "❓" }
         return String(scalar)
     }
 }
