@@ -4,4 +4,4 @@ Just an App example testing how easy is to buidl a watchOS App from scratch with
 
 * Original blog post: http://www.moraleda.info/2020/11/17/baby-watch/
 
-![Baby Colors in action](babycolors.gif)
+<img src="babycolors.gif" alt="Baby Colors in action" width="300"/>
